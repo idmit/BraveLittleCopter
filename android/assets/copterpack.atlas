@@ -1,0 +1,39 @@
+copterpack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+copter0
+  rotate: false
+  xy: 2, 2
+  size: 426, 170
+  orig: 426, 170
+  offset: 0, 0
+  index: -1
+copter1
+  rotate: false
+  xy: 2, 174
+  size: 426, 170
+  orig: 426, 170
+  offset: 0, 0
+  index: -1
+copter2
+  rotate: false
+  xy: 2, 346
+  size: 426, 170
+  orig: 426, 170
+  offset: 0, 0
+  index: -1
+copter3
+  rotate: false
+  xy: 2, 518
+  size: 426, 170
+  orig: 426, 170
+  offset: 0, 0
+  index: -1
+copter4
+  rotate: false
+  xy: 2, 690
+  size: 426, 170
+  orig: 426, 170
+  offset: 0, 0
+  index: -1

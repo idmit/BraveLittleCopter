@@ -1,0 +1,32 @@
+missilepack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+missle0
+  rotate: false
+  xy: 2, 2
+  size: 122, 45
+  orig: 300, 222
+  offset: 69, 88
+  index: -1
+missle1
+  rotate: false
+  xy: 126, 2
+  size: 129, 44
+  orig: 300, 222
+  offset: 62, 92
+  index: -1
+missle2
+  rotate: false
+  xy: 257, 2
+  size: 136, 45
+  orig: 300, 222
+  offset: 55, 88
+  index: -1
+missle3
+  rotate: false
+  xy: 395, 2
+  size: 122, 44
+  orig: 300, 222
+  offset: 69, 85
+  index: -1

@@ -1,0 +1,81 @@
+missilebangpack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+missle10
+  rotate: false
+  xy: 2, 2
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle11
+  rotate: false
+  xy: 304, 2
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle12
+  rotate: false
+  xy: 606, 2
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle13
+  rotate: false
+  xy: 908, 2
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle14
+  rotate: false
+  xy: 1210, 2
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle4
+  rotate: false
+  xy: 1512, 2
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle5
+  rotate: false
+  xy: 2, 226
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle6
+  rotate: false
+  xy: 304, 226
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle7
+  rotate: false
+  xy: 606, 226
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle8
+  rotate: false
+  xy: 908, 226
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
+missle9
+  rotate: false
+  xy: 1210, 226
+  size: 300, 222
+  orig: 300, 222
+  offset: 0, 0
+  index: -1
