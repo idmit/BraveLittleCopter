@@ -5,13 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Plane implements Disposable {
 	public Vector2 xy = new Vector2();
 	public Vector2 launcher = new Vector2();
-	private Array<Texture> planeTextures = new Array<Texture>();
+	private Texture planeTexture = null;
 	public static float vWidth;
 	public static float vHeight;
 	public static Rectangle rect;
@@ -25,14 +24,13 @@ public class Plane implements Disposable {
 
 	public Plane(String internalPath, Copter copter) {
 		this.copter = copter;
-		for (int i = 0; i < 7; ++i) {
-			planeTextures.add(null);
-		}
+		planeTexture = new Texture(Gdx.files.internal(internalPath + (type / 2)
+				+ ".png"));
 		reset(internalPath);
 	}
 
 	public void render(SpriteBatch batch, float delta) {
-		batch.draw(planeTextures.get(type / 2), xy.x, xy.y, vWidth, vHeight);
+		batch.draw(planeTexture, xy.x, xy.y, vWidth, vHeight);
 		move();
 		updateLauncher();
 		rect.y = xy.y;
@@ -58,15 +56,12 @@ public class Plane implements Disposable {
 	}
 
 	public void reset(String internalPath) {
-		if (planeTextures.get(type / 2) == null) {
-			planeTextures.set(
-					type / 2,
-					new Texture(Gdx.files.internal(internalPath + (type / 2)
-							+ ".png")));
-		}
 		float localScale = 0.8f;
-		vWidth = localScale * planeTextures.get(type / 2).getWidth();
-		vHeight = localScale * planeTextures.get(type / 2).getHeight();
+		planeTexture.dispose();
+		planeTexture = new Texture(Gdx.files.internal(internalPath + (type / 2)
+				+ ".png"));
+		vWidth = localScale * planeTexture.getWidth();
+		vHeight = localScale * planeTexture.getHeight();
 		xy.set(BLCopter.vpWidth - vWidth - 20, -vHeight);
 		rect = new Rectangle(xy.x, xy.y, vWidth, vHeight);
 
@@ -98,8 +93,6 @@ public class Plane implements Disposable {
 
 	@Override
 	public void dispose() {
-		for (Texture tex : planeTextures) {
-			tex.dispose();
-		}
+		planeTexture.dispose();
 	}
 }

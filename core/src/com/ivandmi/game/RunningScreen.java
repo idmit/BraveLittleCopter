@@ -134,6 +134,8 @@ public class RunningScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		Plane.type = 0;
+		plane.dispose();
 		boxManager.dispose();
 		buildingManager.dispose();
 		missileManager.dispose();
