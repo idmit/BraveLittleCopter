@@ -1,5 +1,7 @@
 package com.ivandmi.game;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -32,9 +34,9 @@ public class BLCopter extends Game {
 	static private BLCopter game;
 	public static GameState gameState;
 
-	private static Sound bangSound;
-	private static Music ambientMusic;
-	static boolean soundState = true;
+	private static Sound bangSound, launchSound, collectSound, fallSound;
+	public static Music ambientMusic;
+	public static Music copterSound;
 	static Texture soundIconOn, soundIconOff;
 
 	public static float bossPeriod;
@@ -66,8 +68,14 @@ public class BLCopter extends Game {
 		MHeight = font.getBounds(ex).height;
 		headFont = ttfFonts.getHeadFont(bundle.getLocale());
 		bangSound = Gdx.audio.newSound(Gdx.files.internal("bang.mp3"));
+		launchSound = Gdx.audio.newSound(Gdx.files.internal("launch.mp3"));
+		collectSound = Gdx.audio.newSound(Gdx.files.internal("collect.wav"));
+		fallSound = Gdx.audio.newSound(Gdx.files.internal("fall.ogg"));
 		ambientMusic = Gdx.audio.newMusic(Gdx.files.internal("ambient.mp3"));
+		copterSound = Gdx.audio.newMusic(Gdx.files.internal("copterSound.mp3"));
 		ambientMusic.setLooping(true);
+		copterSound.setLooping(true);
+		copterSound.setVolume(0.1f);
 
 		readyScreen = new ReadyScreen();
 		runningScreen = new RunningScreen();
@@ -86,7 +94,11 @@ public class BLCopter extends Game {
 	public void dispose() {
 		setScreen(null);
 		ambientMusic.dispose();
+		copterSound.dispose();
 		bangSound.dispose();
+		launchSound.dispose();
+		collectSound.dispose();
+		fallSound.dispose();
 		batch.dispose();
 		ribbon.dispose();
 		readyScreen.dispose();
@@ -101,7 +113,6 @@ public class BLCopter extends Game {
 
 	@Override
 	public void pause() {
-		ambientMusic.stop();
 		super.pause();
 	}
 
@@ -134,26 +145,46 @@ public class BLCopter extends Game {
 	}
 
 	public static void playBangSound() {
-		if (soundState) {
+		if (ambientMusic.isPlaying()) {
 			bangSound.play();
 		}
 	}
 
-	public static void replayAmbientMusic() {
-		// ambientMusic.stop();
-		ambientMusic.play();
+	public static void playLaunchSound(HashMap<Missile, Long> map, Missile m) {
+		if (ambientMusic.isPlaying()) {
+			map.put(m, launchSound.play(0.1f));
+		}
 	}
 
-	public static void stopAmbientMusic() {
-		ambientMusic.stop();
+	public static void stopLaunchSound(HashMap<Missile, Long> map, Missile m) {
+		if (ambientMusic.isPlaying()) {
+			launchSound.stop(map.get(m));
+		}
+	}
+
+	public static void playFallSound(HashMap<Box, Long> map, Box b) {
+		if (ambientMusic.isPlaying()) {
+			map.put(b, fallSound.play(0.1f));
+		}
+	}
+
+	public static void stopFallSound(HashMap<Box, Long> map, Box b) {
+		if (ambientMusic.isPlaying()) {
+			fallSound.stop(map.get(b));
+		}
 	}
 
 	public static void setSoundState(boolean state) {
-		soundState = state;
 		if (state) {
-			replayAmbientMusic();
+			ambientMusic.play();
 		} else {
-			stopAmbientMusic();
+			ambientMusic.pause();
+		}
+	}
+
+	public static void playCollectSound() {
+		if (ambientMusic.isPlaying()) {
+			collectSound.play();
 		}
 	}
 }

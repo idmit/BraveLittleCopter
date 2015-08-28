@@ -39,7 +39,7 @@ public class Controls implements SwipeDetector.SwipeListener {
 		if (BLCopter.gameState == BLCopter.GameState.Pause) {
 			if (BLCopter.vpWidth - 64 <= x && x <= BLCopter.vpWidth - 3
 					&& BLCopter.vpHeight - 64 <= y && y <= BLCopter.vpHeight - 3) {
-				BLCopter.setSoundState(!BLCopter.soundState);
+				BLCopter.setSoundState(!BLCopter.ambientMusic.isPlaying());
 			} else {
 			BLCopter.setActiveScreen(BLCopter.GameState.Running);
 			}

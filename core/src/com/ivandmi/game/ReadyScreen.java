@@ -17,7 +17,9 @@ public class ReadyScreen implements Screen {
 		rWidth = BLCopter.ribbon.getWidth();
 		rdHeight = BLCopter.vpWidth * BLCopter.ribbon.getHeight() / rWidth;
 		vHeightHalf = rdHeight / 2;
-		BLCopter.replayAmbientMusic();
+		BLCopter.ambientMusic.stop();
+
+		System.out.println("CONST RED");
 	}
 
 	@Override
@@ -37,8 +39,10 @@ public class ReadyScreen implements Screen {
 		BLCopter.batch.draw(BLCopter.ribbon, 0, BLCopter.vpHeight / 2
 				- vHeightHalf, BLCopter.vpWidth, rdHeight);
 
-		BLCopter.batch.draw(BLCopter.soundState ? BLCopter.soundIconOn
-				: BLCopter.soundIconOff, BLCopter.vpWidth - 67, 3, 64, 64);
+		BLCopter.batch.draw(
+				BLCopter.ambientMusic.isPlaying() ? BLCopter.soundIconOn
+						: BLCopter.soundIconOff, BLCopter.vpWidth - 67, 3, 64,
+				64);
 
 		float width = BLCopter.headFont.getBounds(BLCopter.bundle
 				.get("gameName")).width;
@@ -48,6 +52,7 @@ public class ReadyScreen implements Screen {
 				BLCopter.bundle.format("topDistance", topDistance),
 				BLCopter.MWidth, 2 * BLCopter.MHeight);
 		BLCopter.batch.end();
+
 	}
 
 	static public void updateTopDistance(int newTop) {
@@ -59,6 +64,7 @@ public class ReadyScreen implements Screen {
 
 	@Override
 	public void show() {
+		BLCopter.copterSound.stop();
 	}
 
 	@Override
@@ -68,17 +74,18 @@ public class ReadyScreen implements Screen {
 
 	@Override
 	public void pause() {
-		BLCopter.stopAmbientMusic();
+//		BLCopter.stopAmbientMusic();
+		System.out.println("PAUSE RED");
 	}
 
 	@Override
 	public void resume() {
-		BLCopter.replayAmbientMusic();
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
+		System.out.println("HIDE RED");
 	}
 
 	@Override

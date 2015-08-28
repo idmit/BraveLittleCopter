@@ -3,7 +3,6 @@ package com.ivandmi.game;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.utils.Pool;
 
 public class BoxManager implements Disposable {
 	private Texture texture;
-	private Sound collect, fall;
 
 	private final Array<Box> visibleBoxes = new Array<Box>();
 	private final Pool<Box> boxPool = new Pool<Box>() {
@@ -34,9 +32,6 @@ public class BoxManager implements Disposable {
 		texture = new Texture(Gdx.files.internal(texturePath));
 		Box.vWidth = scale * texture.getWidth();
 		Box.vHeight = scale * texture.getHeight();
-
-		collect = Gdx.audio.newSound(Gdx.files.internal("collect.wav"));
-		fall = Gdx.audio.newSound(Gdx.files.internal("fall.ogg"));
 
 		spawnPeriod = 5 + MathUtils.random(15);
 	}
@@ -57,9 +52,7 @@ public class BoxManager implements Disposable {
 		spawnPeriod = 5 + MathUtils.random(15);
 		Box box = boxPool.obtain();
 		box.init();
-		if (BLCopter.soundState) {
-			map.put(box, fall.play(0.1f));
-		}
+		BLCopter.playFallSound(map, box);
 
 		visibleBoxes.add(box);
 	}
@@ -77,9 +70,7 @@ public class BoxManager implements Disposable {
 
 	@Override
 	public void dispose() {
-		fall.dispose();
 		texture.dispose();
-		collect.dispose();
 	}
 
 	public boolean collide(Copter cop) {
@@ -98,10 +89,8 @@ public class BoxManager implements Disposable {
 				} else {
 					cop.lives += 1;
 				}
-				if (BLCopter.soundState) {
-					fall.stop(map.get(box));
-					collect.play();
-				}
+				BLCopter.stopFallSound(map, box);
+				BLCopter.playCollectSound();
 			}
 		}
 		return false;

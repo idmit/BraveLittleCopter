@@ -3,7 +3,6 @@ package com.ivandmi.game;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -29,7 +28,6 @@ public class PlaneMissileManager implements Disposable {
 	};
 
 	private float spawnPeriod, spawnDelta = 0;
-	private Sound launchSound;
 
 	private HashMap<Missile, Long> map = new HashMap<Missile, Long>();
 
@@ -49,8 +47,6 @@ public class PlaneMissileManager implements Disposable {
 		}
 		PlaneMissile.vWidth = Missile.vWidth;
 		PlaneMissile.vHeight = Missile.vHeight;
-
-		launchSound = Gdx.audio.newSound(Gdx.files.internal("launch.mp3"));
 
 		spawnPeriod = 1.5f;
 	}
@@ -75,9 +71,7 @@ public class PlaneMissileManager implements Disposable {
 			float flightTime = (copter.xy.x - plane.xy.x) / m.velocity.x;
 			m.velocity.y = (copter.xy.y - plane.xy.y) / flightTime;
 			aliveMissiles.add(m);
-			if (BLCopter.soundState) {
-				map.put(m, launchSound.play(0.1f));
-			}
+			BLCopter.playLaunchSound(map, m);
 		}
 	}
 
@@ -94,7 +88,6 @@ public class PlaneMissileManager implements Disposable {
 
 	@Override
 	public void dispose() {
-		launchSound.dispose();
 		flightAtlas.dispose();
 		bangAtlas.dispose();
 	}
@@ -113,9 +106,7 @@ public class PlaneMissileManager implements Disposable {
 				m.velocity.x = Copter.velocity;
 				m.resetAnimation(bangAnimation);
 				BLCopter.playBangSound();
-				if (BLCopter.soundState) {
-					launchSound.stop(map.get(m));
-				}
+				BLCopter.stopLaunchSound(map, m);
 				cop.takeShot();
 			}
 		}

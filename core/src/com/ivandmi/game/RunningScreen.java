@@ -31,6 +31,8 @@ public class RunningScreen implements Screen {
 
 		Gdx.input.setInputProcessor(new SwipeDetector(new Controls(copter,
 				missileManager)));
+
+		System.out.println("CONST RUN");
 	}
 
 	@Override
@@ -107,29 +109,34 @@ public class RunningScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		// BraveLittleCopter.vpWidth = Gdx.graphics.getWidth();
-		// BraveLittleCopter.vpHeight = Gdx.graphics.getHeight();
+
 	}
 
 	@Override
 	public void show() {
-		copter.startSound();
+		if (BLCopter.ambientMusic.isPlaying()) {
+			 BLCopter.copterSound.play();
+			 System.out.println("SHOW RUN SND");
+		}
+		System.out.println("SHOW RUN");
 	}
 
 	@Override
 	public void hide() {
-		copter.stopSound();
+		BLCopter.copterSound.pause();
+		System.out.println("HIDE RUN");
 	}
 
 	@Override
 	public void pause() {
 		BLCopter.setActiveScreen(BLCopter.GameState.Pause);
-		BLCopter.stopAmbientMusic();
+//		BLCopter.stopAmbientMusic();
+		System.out.println("PAUSE RUN");
 	}
 
 	@Override
 	public void resume() {
-		copter.stopSound();
+		System.out.println("RESUME RUN");
 	}
 
 	@Override

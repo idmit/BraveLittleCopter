@@ -1,7 +1,6 @@
 package com.ivandmi.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,8 +21,6 @@ public class Copter implements Disposable {
 	public Rectangle rect;
 	public static float velocity;
 	int renderCount = 0;
-	private Music sound = Gdx.audio.newMusic(Gdx.files
-			.internal("copterSound.mp3"));
 	int lives;
 	public int missiles;
 	boolean banged = false;
@@ -46,20 +43,8 @@ public class Copter implements Disposable {
 		lives = 5;
 		missiles = 15;
 		rect = new Rectangle(xy.x, xy.y, vWidth, vHeight);
-		sound.setLooping(true);
 	}
-
-	public void startSound() {
-		if (BLCopter.soundState) {
-			sound.setVolume(0.1f);
-			sound.play();
-		}
-	}
-
-	public void stopSound() {
-		sound.stop();
-	}
-
+	
 	public void render(SpriteBatch batch, float delta) {
 		stateTime += delta;
 		renderCount++;
@@ -90,12 +75,15 @@ public class Copter implements Disposable {
 		this.animation = animation;
 		stateTime = 0;
 		banged = true;
+		BLCopter.copterSound.pause();
 	}
 
 	public void move(float dx, float dy) {
-		xy.add(dx, dy);
-		rect.x = xy.x;
-		rect.y = xy.y;
+		if (!banged) {
+			xy.add(dx, dy);
+			rect.x = xy.x;
+			rect.y = xy.y;
+		}
 	}
 
 	public void checkPos() {
@@ -111,8 +99,6 @@ public class Copter implements Disposable {
 
 	@Override
 	public void dispose() {
-		sound.stop();
-		sound.dispose();
 		atlas.dispose();
 		bangAtlas.dispose();
 	}
